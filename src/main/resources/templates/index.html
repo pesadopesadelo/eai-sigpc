@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+<html lang="en">
+  
+  <head th:replace="fragments/head :: head"> </head>
+  
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+    <header class="app-header navbar" th:replace="fragments/header :: header" />
+   
+    <div class="app-body">
+      
+      <div th:replace="fragments/left-side :: left-side"/>
+      
+      <main class="main">
+       
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+        </ol>
+        
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+            
+            	
+           
+          </div>
+        </div>
+      </main>
+      
+      
+    </div>
+   
+   
+    <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+    
+    <div th:replace="fragments/script-include :: script-include"/>
+    
+  </body>
+</html>

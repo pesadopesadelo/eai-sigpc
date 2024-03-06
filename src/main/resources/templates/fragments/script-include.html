@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body> 
+
+	<div th:fragment="script-include">
+		<!-- CoreUI and necessary plugins--> 
+	    <script src="node_modules/jquery/dist/jquery.min.js" th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+	    <script src="node_modules/popper.js/dist/umd/popper.min.js" th:src="@{/node_modules/popper.js/dist/umd/popper.min.js}"></script>
+	    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+	    <script src="node_modules/pace-progress/pace.min.js" th:src="@{/node_modules/pace-progress/pace.min.js}"></script>
+	    <script src="node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js" th:src="@{/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js}"></script>
+	    <script src="node_modules/@coreui/coreui/dist/js/coreui.min.js" th:src="@{/node_modules/@coreui/coreui/dist/js/coreui.min.js}"></script>
+  		
+  		 <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  	
+  	</div>
+
+</body>
+</html>

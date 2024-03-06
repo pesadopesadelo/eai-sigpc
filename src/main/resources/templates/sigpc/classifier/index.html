@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+--> 
+<html lang="en">
+  
+  <head th:replace="fragments/head :: head"> </head>
+  
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    
+    <header class="app-header navbar" th:replace="fragments/header :: header" />
+    
+    <div class="app-body">
+      
+      <div th:replace="fragments/left-side :: left-side"/>
+      
+      <main class="main">
+        
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" th:href="@{/home}">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Lista de Classificadores Economicos</li>
+        </ol>
+        
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+            
+            
+            <!-- /.row-->
+            <div class="row">
+             		
+             	<div class="col-lg-12">
+                
+                	<div class="card">
+                	
+		                 <div class="card-header">
+		                    Lista <strong>Classificadores</strong>
+		                   
+		                   <div class="card-header-actions">
+		                      <a class="card-header-action btn-setting" href="#" th:href="@{/sigpc/classifier/create}">
+		                        <i class="fa fa-plus-square"></i> Novo
+		                      </a>
+		                    </div>
+		                    
+		                  </div>
+		                   
+		                  <div class="card-body"> 
+		                  
+			                  <div th:if="${messageSuccess != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+			                      <span th:text="${messageSuccess}"></span>
+			                      <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                      </button>
+			                    </div>
+			                    
+			                    <div th:if="${messageError != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			                      <span th:text="${messageError}"></span>
+			                      <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                      </button>
+			                    </div>
+		                   		
+		                   		
+		                   		<div class="card">
+									<div class="card-header">
+										<i class="fa fa-align-justify"></i>
+									</div>
+									<div class="card-body">
+										
+							            <table class="table table-responsive-sm table-bordered table-striped table-sm" id="applicationTable" name="applicationTable">
+					                      <thead>
+					                        <tr>
+					                          <th>Código</th>
+					                          <th>Nome</th>
+					                          <th>Descricao</th>
+					                          <th>Estado</th>
+					                          <th></th>
+					                        </tr>
+					                      </thead>
+					                      <tbody>
+					                       
+					                        <tr th:each="classifier : ${classifiers}">
+					                          <td th:text="${classifier.code}">Vishnu Serghei</td>
+					                          <td th:text="${classifier.name}">2012/01/01</td>
+					                          <td th:text="${classifier.description}">Member</td>
+					                          <td th:switch="${classifier.status}">
+					                            <span class="badge badge-success" th:case="${T(eaismart.webapps.sigpc.util.constants.Status).ATIVO}">Ativo</span>
+					                            <span class="badge badge-danger" th:case="${T(eaismart.webapps.sigpc.util.constants.Status).INATIVO}">Inativo</span>
+					                          </td>
+					                          <td>
+					                          	<a href="#" th:href="@{'/sigpc/classifier/update/' + ${classifier.id}}" class="btn btn-inline btn-light" title="Editar"><i class="icons cui-pencil"></i> </a>
+												<a th:if="${classifier.status == T(eaismart.webapps.sigpc.util.constants.Status).ATIVO}" href="#" th:href="@{'/sigpc/classifier/delete/' + ${classifier.id}}" class="btn btn-inline btn-light" title="Eliminar" onclick="return confirm('Deseja eliminar o registo?');"><i class="icons cui-delete"></i></a>
+					                          </td>
+					                        </tr>
+					                        
+					                      </tbody>
+					                    </table>
+		                   			
+		                   			</div>
+		                   			
+								</div>
+		                   	
+		                  </div>
+		                  
+                </div>
+                
+              </div>
+             	
+            </div>
+           
+          </div>
+        </div>
+      </main>
+      
+      
+    </div>
+   
+   
+    <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+    
+    <div th:replace="fragments/script-include :: script-include"/> 
+    
+    <script type="text/javascript">
+	    $(document).ready( function () {
+	        $('#applicationTable').DataTable();
+	    } );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+--> 
+<html lang="en">
+  
+  <head th:replace="fragments/head :: head"> </head>
+  
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    
+    <header class="app-header navbar" th:replace="fragments/header :: header" />
+    
+    <div class="app-body">
+      
+      <div th:replace="fragments/left-side :: left-side"/>
+      
+      <main class="main">
+        
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" th:href="@{/home}">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Gestão de Movimentos</li>
+        </ol>
+        
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+            
+            
+            <!-- /.row-->
+            <div class="row">
+             		
+             	<div class="col-lg-12">
+                
+                	<div class="card">
+                	
+		                 <div class="card-header">
+		                    Gestão de <strong>Movimentos</strong>
+		                   
+		                   <div class="card-header-actions">
+		                      <a class="card-header-action btn-setting" href="#" th:href="@{/sigpc/movement/form}">
+		                        <i class="fa fa-upload"></i> Importar
+		                      </a>
+		                    </div>
+		                    
+		                  </div>
+		                   
+		                  <div class="card-body"> 
+		                  
+			                  	
+			                  	<div class="row">
+			                  	
+				                     <div class="col">
+				                     
+				                        <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+				                          <li class="nav-item">
+				                            <a th:if="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).DEBIT}" class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">RECEBIMENTOS</a>
+				                            <a th:if="${movementDto.type != T(eaismart.webapps.sigpc.util.constants.TransitionType).DEBIT}" class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">RECEBIMENTOS</a>
+				                          </li>
+				                          <li class="nav-item">
+				                            <a th:if="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).CREDIT}" class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">PAGAMENTOS</a>
+				                            <a th:if="${movementDto.type != T(eaismart.webapps.sigpc.util.constants.TransitionType).CREDIT}" class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">PAGAMENTOS</a>
+				                          </li>
+				                          <li class="nav-item">
+				                            <a th:if="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).TRANSFER}" class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">TRANSFERÊNCIAS</a>
+				                            <a th:if="${movementDto.type != T(eaismart.webapps.sigpc.util.constants.TransitionType).TRANSFER}" class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">TRANSFERÊNCIAS</a>
+				                          </li>
+				                        </ul>
+				                        <div class="tab-content" id="pills-tabContent">
+				                          
+				                          <div th:class="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).DEBIT} ? 'tab-pane fade show active' : 'tab-pane fade'" class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+
+													<div class="col-sm-12">
+													
+														<div class="card">
+														
+																<div class="card-header">
+																	<i class="fa fa-filter"></i>
+																	<em>Filtros</em>
+																</div>
+																<div class="card-body">
+																	
+																		<form action="#" method="post"
+																		th:action="@{/sigpc/movement/receivement}"
+																		th:object="${movementDto}" enctype="multipart/form-data">
+
+																		<div class="col-sm-12">
+
+																			<div class="row">
+
+
+																				<div class="form-group col-sm-4">
+																					<label for="codigo">Código</label> 
+																					<input class="form-control" id="codigo" type="text" placeholder="Código" th:field="*{numDoc}"/>
+                                                        						</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="dataInicio">Data Início</label> <input th:field="*{beginDate}" id="dataInicio" class="form-control" type="date" />
+																				</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="dataFim">Data Fim</label> <input th:field="*{endDate}" id="dataFim" class="form-control" type="date" />
+																				</div>
+
+																			</div>
+
+																		</div>
+																		
+																	
+																	
+																</div>
+																
+																<div class="card-footer">
+																	<div class="col-sm-12">
+																		<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Pesquisar </button>
+																	</div>
+																</div>
+																
+																</form>
+																
+															</div>
+													
+													</div>
+													
+													<div class="col-sm-12">
+																	
+																	<div class="card">
+																		<div class="card-header">
+																			<i class="fa fa-align-justify"></i>
+																			<em>Movimentos</em>
+																		</div>
+																		<div class="card-body">
+																			
+																			<table
+																				class="table table-responsive-sm table-bordered table-striped table-sm"
+																				id="movementTable" name="movementTable">
+																				<thead>
+																					<tr>
+																						<th>Data</th>
+																						<th>Beneficiário</th>
+																						<th>Descrição</th>
+																						<th>Nº Documento</th>
+																						<th>CL. Económica</th>
+																						<th>Valor</th>
+																						<th>Total</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+
+																					<tr th:each="r : ${recebimentos}">
+																						<td th:text="${#dates.format(r.date, 'dd-MM-yyyy')}">erer</td>
+																						<td th:text="${r.recipient}">iekid</td>	
+																						<td th:text="${r.description}">2012/01/01</td>
+																						<td th:text="${r.numDoc}">CPTO1</td>
+																						<td th:text="${r.classifierDto.description}"></td>
+																						<td th:text="${r.valor}">CPTO1</td>
+																						<td th:text="${r.balance}">CPTO1</td>
+																					</tr>
+
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+
+
+																</div>
+
+
+											</div>
+				                          
+				                          <div th:class="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).CREDIT} ? 'tab-pane fade show active' : 'tab-pane fade'" class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+				                          
+				                          		<div class="col-sm-12">
+													
+														<div class="card">
+														
+																<div class="card-header">
+																		<i class="fa fa-filter"></i>
+																		<em>Filtros</em>
+																</div>
+																<div class="card-body">
+																	
+																		<form action="#" method="post"
+																		th:action="@{/sigpc/movement/payment}"
+																		th:object="${movementDto}" enctype="multipart/form-data">
+
+																		<div class="col-sm-12">
+
+																			<div class="row">
+
+
+																				<div class="form-group col-sm-4">
+																					<label for="paymentCodigo">Código</label> 
+																					<input class="form-control" id="paymentCodigo" type="text" placeholder="Código" th:field="*{codePayments}"/>
+                                                        						</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="paymentDataInicio">Data Início</label> <input th:field="*{beginDatePayments}" id="paymentDataInicio" class="form-control" type="date" />
+																				</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="paymentDataFim">Data Fim</label> <input th:field="*{endDatePayments}" id="paymentDataFim" class="form-control" type="date" />
+																				</div>
+
+																			</div>
+
+																		</div>
+																		
+																	
+																	
+																</div>
+																
+																<div class="card-footer">
+																	<div class="col-sm-12">
+																		<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Pesquisar</button>
+																	</div>
+																</div>
+																
+																</form>
+																
+															</div>
+													
+													</div>
+													
+													<div class="col-sm-12">
+																	
+																	<div class="card">
+																		<div class="card-header">
+																			<i class="fa fa-align-justify"></i>
+																			<em>Movimentos</em>
+																		</div>
+																		<div class="card-body">
+																			
+																			<table
+																				class="table table-responsive-sm table-bordered table-striped table-sm"
+																				id="paymentTable" name="paymentTable">
+																				<thead>
+																					<tr>
+																						<th>Data</th>
+																						<th>Beneficiário</th>
+																						<th>Descrição</th>
+																						<th>Nº Documento</th>
+																						<th>CL. Económica</th>
+																						<th>Valor</th>
+																						<th>Total</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+
+																					<tr th:each="p : ${pagamentos}">
+																						<td th:text="${#dates.format(p.date, 'dd-MM-yyyy')}">erer</td>
+																						<td th:text="${p.recipient}">iekid</td>
+																						<td th:text="${p.description}">2012/01/01</td>
+																						<td th:text="${p.numDoc}">CPTO1</td>
+																						<td th:text="${p.classifierDto.description}"></td>
+																						<td th:text="${p.valor}">CPTO1</td>
+																						<td th:text="${p.balance}">CPTO1</td>
+																					</tr>
+
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+
+
+																</div>
+				                          
+				                          </div>
+				                          
+				                          <div th:class="${movementDto.type == T(eaismart.webapps.sigpc.util.constants.TransitionType).TRANSFER} ? 'tab-pane fade show active' : 'tab-pane fade'" class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+				                          
+				                          		
+				                          		<div class="col-sm-12">
+													
+														<div class="card">
+														
+																<div class="card-header">
+																	<i class="fa fa-filter"></i>
+																	<em>Filtros</em>
+																</div>
+																<div class="card-body">
+																	
+																		<form action="#" method="post"
+																		th:action="@{/sigpc/movement/transference}"
+																		th:object="${movementDto}" enctype="multipart/form-data">
+
+																		<div class="col-sm-12">
+
+																			<div class="row">
+
+
+																				<div class="form-group col-sm-4">
+																					<label for="transferenceCodigo">Código</label> 
+																					<input class="form-control" id="transferenceCodigo" type="text" placeholder="Código" th:field="*{codeTransferences}"/>
+                                                        						</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="transferenceDataInicio">Data Início</label> <input th:field="*{beginDateTransferences}" id="transferenceDataInicio" class="form-control" type="date" />
+																				</div>
+																				
+																				<div class="form-group col-sm-4">
+																					<label for="transferenceDataFim">Data Fim</label> <input th:field="*{endDateTransferences}" id="transferenceDataFim" class="form-control" type="date" />
+																				</div>
+
+																			</div>
+
+																		</div>
+																		
+																	
+																	
+																</div>
+																
+																<div class="card-footer">
+																	<div class="col-sm-12">
+																		<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Pesquisar</button>
+																	</div>
+																</div>
+																
+																</form>
+																
+															</div>
+													
+													</div>
+													
+													<div class="col-sm-12">
+																	
+																	<div class="card">
+																		<div class="card-header">
+																			<i class="fa fa-align-justify"></i>
+																			<em>Movimentos</em>
+																		</div>
+																		<div class="card-body">
+																			
+																			<table
+																				class="table table-responsive-sm table-bordered table-striped table-sm"
+																				id="transferenceTable" name="transferenceTable">
+																				<thead>
+																					<tr>
+																						<th>Data</th>
+																						<th>Beneficiário</th>
+																						<th>Descrição</th>
+																						<th>Nº Documento</th>
+																						<th>CL. Económica</th>
+																						<th>Valor</th>
+																						<th>Total</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+
+																					<tr th:each="t : ${transferencias}">	
+																						<td th:text="${#dates.format(t.date, 'dd-MM-yyyy')}">erer</td>
+																						<td th:text="${t.recipient}">iekid</td>
+																						<td th:text="${t.description}">2012/01/01</td>
+																						<td th:text="${t.numDoc}">CPTO1</td>
+																						<td th:text="${t.classifierDto.description}"></td>
+																						<td th:text="${t.valor}">CPTO1</td>
+																						<td th:text="${t.balance}">CPTO1</td>
+																					</tr>
+
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+
+
+																</div>
+				                          		
+				                          
+				                          </div>
+				                          
+				                        </div>
+				                        
+				                      </div>
+				                      
+				                    </div>
+		                   		
+		                   	
+		                  </div>
+		                  
+                </div>
+                
+              </div>
+             	
+            </div>
+           
+          </div>
+        </div>
+      </main>
+      
+      
+    </div>
+   
+   
+    <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+    
+    <div th:replace="fragments/script-include :: script-include"/> 
+    
+    <script type="text/javascript">
+	    $(document).ready( function () {
+	        $('#movementTable').DataTable();
+	        $('#paymentTable').DataTable();
+	        $('#transferenceTable').DataTable();
+	    } );
+    </script>
+  </body>
+</html>

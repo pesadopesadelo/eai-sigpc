@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<!--* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)-->
+
+<html lang="en">
+
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h2> Balancete <strong>Trimestral</strong></h2>
+
+        <table style="width:100%"
+               class="table table-responsive-sm table-bordered table-striped table-sm"
+               id="balancesheetTable" name="balancesheetTable">
+            <thead>
+
+                <tr>
+                    <th>CL. Económica</th>
+                    <th>Descrição</th>
+                    <th>Orc. Inicial</th>
+                    <th>Trans. Verba</th>
+                    <th>Orc .Atual</th>
+                    <th>Trimestre</th>
+                </tr>
+
+            </thead>
+            
+            <tbody>
+
+                <tr th:each="q : ${quarter}">	
+                    <td th:text="${q.ecoClassifier}">CPTO1</td>
+                    <td th:text="${q.description}"></td>
+                    <td th:text="${q.initialBudget}">CPT01</td>
+                    <td th:text="${q.moneyTransfer}">CPT01</td>
+                    <td th:text="${q.finalBudget}">CPT01</td>
+                    <td th:text="${q.quarterValue}">CPT01</td>
+                </tr>
+
+            </tbody>
+            
+        </table>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#balanceSheetTable').DataTable();
+            });
+        </script>
+    </body>
+</html>

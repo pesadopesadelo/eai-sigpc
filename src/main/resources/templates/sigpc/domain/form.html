@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+<html lang="en">
+   
+  <head th:replace="fragments/head :: head"> </head>
+  
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    
+    <header class="app-header navbar" th:replace="fragments/header :: header" />
+    
+    <div class="app-body">
+      
+      <div th:replace="fragments/left-side :: left-side"/>
+      
+      <main class="main">
+        
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" th:href="@{/home}">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="#" th:href="@{/sigpc/domain}">Lista Domínios</a>
+          </li>
+          <li class="breadcrumb-item active">Domínio</li>
+        </ol>
+        
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+            
+            
+            <!-- /.row-->
+            <div class="row">
+             		
+             	<div class="col-lg-12">
+                
+                	<div class="card">
+		                  <div class="card-header">
+		                   Novo <strong>Domínio</strong></div>
+		                 
+		                  <div class="card-body">
+		                  
+		                    <form action="#" method="post" th:action="@{/sigpc/domain/form}" th:object="${domain}">
+		                     
+		                     <div class="col-sm-12">
+			                     <div class="row">
+			                     	
+			                     		
+		                     <div class="form-group col-sm-6">
+		                          <label for="dominio">Dominio</label>
+		                          <input class="form-control" th:class=" ${#fields.hasErrors('dominio')} ? 'form-control is-invalid' : 'form-control'" id="dominio" type="text" placeholder="Dominio ..." th:field="*{dominio}" required="required"/>
+		                       	  <div th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}" class="invalid-feedback">Please provide a valid informations.</div>
+		              		 </div> 
+		              		 
+		              		 <div class="form-group col-sm-6">
+		                          <label for="estado">Estado</label>
+		                           <select th:class=" ${#fields.hasErrors('estado')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="estado" type="text" placeholder="Schema" th:field="*{estado}" required="required">
+		                        		<option th:value="''" th:text="'-- Escolher estado --'"></option> 
+		                        		<option th:each="sta : ${T(eaismart.webapps.sigpc.util.constants.Status).values()}" th:value="${sta}" th:text="${sta}"></option> 	
+		                        	</select>
+		                          <div th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="invalid-feedback">Please provide a valid informations.</div>
+		              		</div> 
+		                     
+		                      <div class="form-group col-sm-6">
+		                          <label for="codigo">Código</label>
+		                          <input th:class=" ${#fields.hasErrors('codigo')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="codigo" type="text" placeholder="Código do dominio" th:field="*{codigo}" required="required"/>
+		                      	  <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="invalid-feedback">Please provide a valid informations.</div>
+		                      </div>
+		                       
+				               <div class="form-group col-sm-6">
+		                          <label for="significado">Significado</label>
+		                          <input class="form-control" th:class=" ${#fields.hasErrors('significado')} ? 'form-control is-invalid' : 'form-control'" id="significado" type="text" placeholder="Significado ..." th:field="*{significado}" required="required"/>
+		                       	  <div th:if="${#fields.hasErrors('significado')}" th:errors="*{significado}" class="invalid-feedback">Please provide a valid informations.</div>
+		              			</div>  
+			                     	
+			                     </div>
+		                     </div>
+		                     
+		                     <div class="form-group">
+		                          <input class="form-control" id="id" type="hidden" th:field="*{id}" />
+		                       </div>
+		                     
+		                       
+		                   
+		                  </div>
+		                  
+		                  <div class="card-footer">
+		                    <button class="btn btn-sm btn-primary" type="submit">
+		                      <i class="fa fa-dot-circle-o"></i> Submit</button>
+		                    <button class="btn btn-sm btn-danger" type="reset">
+		                      <i class="fa fa-ban"></i> Reset</button>
+		                  </div>
+		              </form>
+                </div>
+                
+              </div>
+             	
+            </div>
+           
+          </div>
+        </div>
+      </main>
+      
+      
+    </div>
+   
+   
+    <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+    
+    <div th:replace="fragments/script-include :: script-include"/>
+    
+  </body>
+</html>

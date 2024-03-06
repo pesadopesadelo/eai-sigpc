@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+<html lang="en">
+
+    <head th:replace="fragments/head :: head"> </head>
+
+    <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+        <header class="app-header navbar" th:replace="fragments/header :: header" />
+
+        <div class="app-body">
+
+            <div th:replace="fragments/left-side :: left-side"/>
+
+            <main class="main">
+
+                <!-- Breadcrumb-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">DAO Generator</li>
+                </ol>
+
+                <div class="container-fluid">
+                    <div class="animated fadeIn">
+
+
+                        <!-- /.row-->
+                        <div class="row">
+
+                            <div class="col-lg-12">
+
+                                <div class="card">
+                                    <div class="card-header"><strong>DAO</strong> Generator</div>
+                                    <div class="card-body">
+                                       
+                                        <div class="col-sm-12">
+                                            <div th:if="${messageSuccess != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageSuccess}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+
+                                            <div th:if="${messageError != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageError}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+
+                                            <div th:if="${messageInfo != null}" class="alert alert-info alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageInfo}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+
+                                            <div th:if="${messageWarning != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageWarning}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                      
+                                        <form action="#" method="post" th:action="@{/generator/dao/save}" th:object="${generator}">
+
+                                            <div class="col-sm-12">
+                                                <div class="row">
+
+                                                    <div class="form-group col-sm-3">
+                                                        <label for="applicationCode">Aplicação</label>
+                                                        <input th:class=" ${#fields.hasErrors('applicationCode')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="applicationCode" type="text" placeholder="Código da Aplicação" th:field="*{applicationCode}" required="required"/>
+                                                        <div th:if="${#fields.hasErrors('applicationCode')}" th:errors="*{applicationCode}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div>
+
+                                                    <div class="form-group col-sm-3">
+                                                        <label for="dataSource">Data Source</label>
+                                                        <input th:class=" ${#fields.hasErrors('dataSource')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="dataSource" type="text" placeholder="Data Source" th:field="*{dataSource}" readonly="readonly" required="required"/>
+                                                        <div th:if="${#fields.hasErrors('dataSource')}" th:errors="*{dataSource}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div>     
+
+                                                    <div class="form-group col-sm-3">
+                                                        <label for="schema">Scheme</label>
+
+                                                        <select th:class=" ${#fields.hasErrors('schema')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="schema" type="text" placeholder="Schema" th:field="*{schema}" required="required">
+                                                            <option th:value="''" th:text="'-- Escolher scheme --'"></option> 
+                                                            <option th:each="sch : ${generator.schemas}" th:value="${sch}" th:text="${sch}"></option>
+                                                        </select>
+                                                        <div th:if="${#fields.hasErrors('schema')}" th:errors="*{schema}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+
+                                                    <div class="form-group col-sm-3">
+                                                        <label for="schema">Type</label>
+
+                                                        <select th:class=" ${#fields.hasErrors('type')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="type" type="text" th:field="*{type}" required="required">
+                                                            <option th:value="''" th:text="'-- Escolher Type --'"></option> 
+                                                            <option th:each="t : ${generator.types}" th:value="${t}" th:text="${t}"></option>
+                                                        </select>
+                                                        <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12" th:if="${generator.tables != null and !generator.tables.empty}">
+                                                <div class="card">
+                                                    <div class="card-header"><i class="fa fa-align-justify"></i></div>
+                                                    <div class="card-body">
+                                                        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="applicationTable" name="applicationTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th  style="width: 5%"></th>
+                                                                    <th>Tabela (Nome)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                <tr th:each="table : ${generator.tables}">
+                                                                    <td> <div class="form-check checkbox"><input class="form-check-input" id="check1" type="checkbox" th:value="${table}" th:field="*{selectedTables}"/></div></td>
+                                                                    <td th:text="${table}">2012/01/01</td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+
+                                    <div class="card-footer">
+
+                                        <button class="btn btn-sm btn-primary" type="submit" name = "search" value="Pesquisar">
+                                            <i class="fa fa-search"></i> Pesquisar </button> 
+
+                                        <button class="btn btn-sm btn-success" type="submit" name = "gerar" value="Gerar">
+                                            <i class="fa fa-dot-circle-o"></i> Gerar </button>
+
+                                    </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+
+
+        </div>
+
+
+        <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+
+        <div th:replace="fragments/script-include :: script-include"/>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#applicationTable').DataTable();
+            });
+        </script>
+
+    </body>
+</html>

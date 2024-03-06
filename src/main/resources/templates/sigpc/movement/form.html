@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+<html lang="en">
+
+    <head th:replace="fragments/head :: head"> </head>
+
+    <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+        <header class="app-header navbar" th:replace="fragments/header :: header" />
+
+        <div class="app-body">
+
+            <div th:replace="fragments/left-side :: left-side"/>
+
+            <main class="main">
+
+                <!-- Breadcrumb-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#" th:href="@{/home}"> Home </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#" th:href="@{/sigpc/movement}"> Gestão de Movimentos </a>
+                    </li>
+                    <li class="breadcrumb-item active">Importar Movimentos</li>
+                </ol>
+
+                <div class="container-fluid">
+                    <div class="animated fadeIn">
+
+
+                        <!-- /.row-->
+                        <div class="row">
+
+                            <div class="col-lg-12">
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        Importar <strong>Movimentos</strong>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div th:if="${messageSuccess != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageSuccess}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+
+                                            <div th:if="${messageError != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageError}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <div th:if="${messageWarning != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <span th:text="${messageWarning}"></span>
+                                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <form action="#" method="POST" th:action="@{/sigpc/movement/upload}" th:object="${movement}" enctype = "multipart/form-data">
+
+                                            <div class="col-sm-12">
+
+                                                <div class="row">
+
+
+                                                    <div class="form-group col-sm-4">
+                                                        <label for="upload">Ficheiro EXCEL</label>
+                                                        <input class="form-control" th:class=" ${#fields.hasErrors('upload')} ? 'form-control is-invalid' : 'form-control'" id="upload" type="file" name = "upload_" required="required" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                                                        <div th:if="${#fields.hasErrors('upload')}" th:errors="*{upload}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+
+                                                    <div class="form-group col-sm-4">
+                                                        <label for="currency">Moeda</label>
+                                                        <select th:class=" ${#fields.hasErrors('currency')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="currency" type="text"  th:field="*{currency}" required="required">
+                                                            <option th:value="''" th:text="'-- Escolher Moeda --'"></option> 
+                                                            <option th:each="currency : ${movement.currencies}" th:value="${currency.codigo}" th:text="${currency.significado}"></option> 
+                                                        </select>
+                                                        <div th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+                                                    
+                                                    <div class="form-group col-sm-4">
+                                                        <label for="month">Mês</label>
+                                                        <select th:class=" ${#fields.hasErrors('month')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="month" type="text"  th:field="*{month}" required="required">
+                                                            <option th:value="''" th:text="'-- Escolher Mês --'"></option> 
+                                                            <option th:each="type : ${movement.months}" th:value="${type.codigo}" th:text="${type.significado}"></option> 
+                                                        </select>
+                                                        <div th:if="${#fields.hasErrors('month')}" th:errors="*{month}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+                                                    
+                                                     <div class="form-group col-sm-4">
+                                                        <label for="companyId">Empresa</label>
+                                                        <select th:class=" ${#fields.hasErrors('companyId')} ? 'form-control is-invalid' : 'form-control'" class="form-control" id="companyId" type="text"  th:field="*{companyId}" required="required">
+                                                            <option th:value="''" th:text="'-- Escolher Empresa --'"></option> 
+                                                            <option th:each="empresa : ${movement.companies}" th:value="${empresa.key}" th:text="${empresa.value}"></option> 
+                                                        </select>
+                                                        <div th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}" class="invalid-feedback">Please provide a valid informations.</div>
+                                                    </div> 
+
+                                                </div>
+
+                                            </div>
+
+                                    </div>
+
+                                    <div class="card-footer">
+                                    	 <div class="col-sm-12">
+                                    	 	 <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-upload"></i> Importar</button>
+                                        	 <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                                    	 </div>
+                                    </div>
+                                    </form>
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+            </main>
+
+
+        </div>
+
+
+        <footer class="app-footer" th:replace="fragments/footer :: footer"></footer>
+
+        <div th:replace="fragments/script-include :: script-include"/>
+
+    </body>
+</html>

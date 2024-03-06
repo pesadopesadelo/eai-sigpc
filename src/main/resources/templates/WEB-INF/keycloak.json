@@ -1,0 +1,11 @@
+{
+    "auth-server-url": "http://eai-global.com:8080/auth",
+    "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgID9MEuBu2NkzqYPw2hbKxwV+Uk5Edrdl679e9O6soxFWNP2+3GyUGdejJal/hM/9uJSXUVLE8T7bH5iTYFu0kHiXoY6yEJL42jSFVOv0HG33b00n3qhWLgaGvQuWUmrPfbzn7oLLFFf3/mCx1BnqxjQn7XhCm/y6GDW/6VYJjJbX79uLYr/Nb0v6MTWt+YgklNvZ6kLTppBhE+BBwdfzq0MXP0S8nso+fHuXqkpHomcD8o87GnpkDi2eLzv6AgKgOX0NEagjJ0vxd9enS3k2FkE0GfP5Rgw7AEWqn7J7q6+uPWXq5mE6odVcVoEbuBZf/15/ED2ArGxNq4EPEhi7QIDAQAB",
+    "ssl-required": "external",
+    "realm": "eai-smart-realm",
+    "resource": "eaismart-frontend",
+    "use-resource-role-mappings": true,
+    "public-client": true,
+    "enable-pkce": true
+}
+

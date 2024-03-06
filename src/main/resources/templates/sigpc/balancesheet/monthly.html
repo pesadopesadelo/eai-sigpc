@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<!--* CoreUI - Free Bootstrap Admin Template
+* @version v2.1.12
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)-->
+
+<html lang="en">
+
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;    
+            }
+        </style>
+    </head>
+
+    <body>
+      
+        <h2> Balancete <strong>Mensal</strong></h2>
+
+        <table style="width:100%"
+               class="table table-responsive-sm table-bordered table-striped table-sm"
+               id="balanceSheetTable" name="balanceSheetTable">
+            <thead>
+                <tr>
+                    <th>CL. Económica</th>
+                    <th>Descrição</th>
+                    <th>Valor Entrada</th>
+                    <th>Trans. Verba</th>
+                    <th>Valor Saida</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="m : ${monthly}">	
+                    <td th:text="${m.ecoClassifier}">CPTO1</td>
+                    <td th:text="${m.description}">iekid</td>
+                    <td th:text="${m.initialBudget}">CPT01</td>
+                    <td th:text="${m.moneyTransfer}">CPT01</td>
+                    <td th:text="${m.finalBudget}">CPT01</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table style="width:100%"
+               class="table table-responsive-sm table-bordered table-striped table-sm"
+               id="balanceSheetTotalTable" name="balanceSheetTotalTable">
+
+            <thead>
+                <tr>
+                    <th>Total Receitas</th>
+                    <th>Total Despesas</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="m : ${month}">	
+                    <td th:text="${m.totalRevenue}">CPT01</td>
+                    <td th:text="${m.totalExpenses}">CPT01</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <br>
+        <table style="width:100%"
+               class="table table-responsive-sm table-bordered table-striped table-sm"
+               id="balanceSheetTotalBalanceTable" name="balanceSheetTotalBalanceTable">
+
+            <thead>
+                <tr>
+                    <th>Saldo Inicial</th>
+                    <th>Saldo Final</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="m : ${month}">	
+                    <td th:text="${m.initialBalance}">CPT01</td>
+                    <td th:text="${m.finalBalance}">CPT01</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <br>
+
+        <table style="width:100%"
+               class="table table-responsive-sm table-bordered table-striped table-sm"
+               id="balanceSheetTotal" name="balanceSheetTotal">
+           
+            <thead>
+                <tr>
+                    <th>Total Entradas</th>
+                    <th>Total Saida</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+
+                <tr th:each="m : ${month}">	
+                    <td th:text="${m.totalEntry}">CPT01</td>
+                    <td th:text="${m.totalOutput}">CPT01</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#balanceSheetTable').DataTable();
+                $('#balanceSheetTotalTable').DataTable();
+                $('#balanceSheetTotalBalanceTable').DataTable();
+                $('#balanceSheetTotal').DataTable();
+            });
+        </script>
+    </body>
+</html>
